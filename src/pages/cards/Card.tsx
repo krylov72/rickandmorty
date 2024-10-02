@@ -6,15 +6,16 @@ export type CardState = {
   location: string;
   stateBorn: string;
   avatar: string;
+  status: string;
 };
 
-export const Card = ({ name, species, location, stateBorn, avatar }: CardState) => {
+export const Card = ({ name, species, location, stateBorn, avatar, status }: CardState) => {
   return (
     <CardContainer>
       <Photo src={avatar} />
       <InfoContainer>
         <Title>{name}</Title>
-        <Class> {species} </Class>
+        <Class> {`${status} - ${species}`} </Class>
         <Location> {location} </Location>
         <Date> {stateBorn} </Date>
       </InfoContainer>
