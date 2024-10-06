@@ -6,11 +6,6 @@ import { Header } from '../pages/header/Header';
 import { Cards } from '../pages/cards/Cards';
 
 function App() {
-  useEffect(() => {
-    cardsApi.getCharacter().then((res) => {
-      console.log(res.data);
-    });
-  });
   return (
     <div className="App">
       <Header />

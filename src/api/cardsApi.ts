@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-type Info = {
+export type Info = {
   count: number;
   pages: number;
-  next: string;
-  prev: null;
+  next: string | null;
+  prev: string | null;
 };
 
 export type Results = {
@@ -28,7 +28,7 @@ export type Results = {
   created: string;
 };
 
-type BaseResponse = {
+export type BaseResponse = {
   info: Info;
   results: Results[];
 };
@@ -38,7 +38,7 @@ const instance = axios.create({
 });
 
 export const cardsApi = {
-  getCharacter() {
-    return instance.get<BaseResponse>('/character');
+  getCharacter(url: string) {
+    return instance.get<BaseResponse>(url);
   },
 };
