@@ -64,4 +64,5 @@ const Date = styled.p``;
 const Photo = styled.img`
   width: 150px;
   object-fit: contain;
+  border-radius:10px
 `;
