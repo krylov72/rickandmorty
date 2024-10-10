@@ -14,6 +14,7 @@ const HeaderDiv = styled.header`
   display: grid;
   grid-template-columns: 50px auto;
   margin-top: 15px;
+  padding-top:20px;
   padding-bottom: 15px;
   border-bottom: 1px solid #fdf0d5;
 `;
