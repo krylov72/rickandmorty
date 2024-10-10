@@ -7,8 +7,12 @@ import { fetchCards } from './cards-reducer';
 import { useSelector } from 'react-redux';
 import { cardsSelector } from './cardsSelector';
 import { Info } from '../../api/cardsApi';
+import { RootState } from '../../app/store';
+import { Loader } from '../../common/Loader';
 
 export const Cards = () => {
+  
+  const isLoading = useSelector((state:RootState) => state.loading)
   const [currentApiUrl, setCurrentApiUrl] = useState<string>('https://rickandmortyapi.com/api/character/?page=1');
   const [info, setInfo] = useState<Info | null>(null);
 
@@ -33,6 +37,11 @@ export const Cards = () => {
       }
     });
   }, [currentApiUrl]);
+  
+  if (isLoading) {
+    return <Loader />
+  }
+
   return (
     <>
       <CardsContainer>
