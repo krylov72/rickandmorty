@@ -6,7 +6,7 @@ import { createAppAsyncThunk } from '../../common/create-async-thunk';
 type InitialState = {
   cards: Results[];
   loading: boolean;
-  error: null;
+  error: string | null;
 };
 
 const initialState: InitialState = {
@@ -20,9 +20,29 @@ const cardsSlice = createSlice({
   name: 'cards',
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchCards.fulfilled, (state, action) => {
+    builder
+    .addCase(fetchCards.fulfilled, (state, action) => {
       state.cards = action.payload.results.map((c) => ({ ...c }));
-    });
+    })
+    .addCase(fetchCards.rejected,(state,action) => {
+      console.log(action.payload);
+      
+    })
+    .addMatcher((action) => {
+      return (action.type.endsWith("/pending") || action.type.endsWith("/fulfilled") || action.type.endsWith("/rejected"))
+    }, (state,action) => {
+      if (action.type.endsWith('/pending')) {
+        state.loading = true
+      } else if (action.type.endsWith("/fulfilled")) {
+        state.loading = false;
+      } else if (action.type.endsWith("/rejected")) {
+        state.loading = false;
+        
+      }
+    }
+  )
+   
+    
   },
 });
 
@@ -35,8 +55,8 @@ export const fetchCards = createAppAsyncThunk<BaseResponse,string>(
     try {
       const res = await cardsApi.getCharacter(url);
       return res.data;
-    } catch (e) {
-      return rejectWithValue(null);
+    } catch (e:any) {
+      return rejectWithValue(e);
     }
   }
 );
