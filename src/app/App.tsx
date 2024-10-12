@@ -7,9 +7,10 @@ import { LoadingScreen } from '../pages/loading/LoadingScreen';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../common/useAppDispatch';
 import { cardsActions } from '../pages/cards/cards-reducer';
+import {  isInitializedSelector } from '../pages/cards/cardsSelector';
 
 function App() {
-  const isInitialized = useSelector((state: RootState) => state.isInitialized);
+  const isInitialized = useSelector(isInitializedSelector);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
