@@ -39,6 +39,13 @@ const instance = axios.create({
 
 export const cardsApi = {
   getCharacter(url: string) {
-    return instance.get<BaseResponse>(url);
+    return instance.get<BaseResponse>(url, {
+      params: {
+        info: {
+          count: 826,
+          pages: 42,
+        },
+      },
+    });
   },
 };

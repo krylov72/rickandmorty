@@ -11,8 +11,7 @@ import { RootState } from '../../app/store';
 import { Loader } from '../../common/Loader';
 
 export const Cards = () => {
-  
-  const isLoading = useSelector((state:RootState) => state.loading)
+  const isLoading = useSelector((state: RootState) => state.loading);
   const [currentApiUrl, setCurrentApiUrl] = useState<string>('https://rickandmortyapi.com/api/character/?page=1');
   const [info, setInfo] = useState<Info | null>(null);
 
@@ -36,10 +35,10 @@ export const Cards = () => {
         setInfo(res.payload.info);
       }
     });
-  }, [currentApiUrl]);
-  
+  }, []);
+
   if (isLoading) {
-    return <Loader />
+    return <Loader />;
   }
 
   return (
