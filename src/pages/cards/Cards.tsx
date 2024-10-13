@@ -70,6 +70,6 @@ export const Cards = () => {
 
 const CardsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, minmax(200px, 1fr));
   gap: 10px;
 `;

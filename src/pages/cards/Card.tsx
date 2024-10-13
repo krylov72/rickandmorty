@@ -3,22 +3,22 @@ import styled from 'styled-components';
 export type CardState = {
   name: string;
   species: string;
-  gender:string;
+  gender: string;
   location: string;
   avatar: string;
   status: string;
 };
 
-export const Card = ({ name, species,gender, location, avatar, status }: CardState) => {
+export const Card = ({ name, species, gender, location, avatar, status }: CardState) => {
   return (
     <CardContainer>
       <Photo src={avatar} />
       <InfoContainer>
         <Title>{name}</Title>
         <Class>
-          <Checker $alive={status === 'Alive'?true:false}></Checker>
-           {`${status} - ${species}`} 
-           </Class>
+          <Checker $alive={status === 'Alive' ? true : false}></Checker>
+          {`${status} - ${species}`}
+        </Class>
         <Gender> Identify: {gender} </Gender>
         <Location> Last seen in: <br></br>{location} </Location>
       </InfoContainer>
@@ -29,26 +29,43 @@ export const Card = ({ name, species,gender, location, avatar, status }: CardSta
 export default Card;
 
 const CardContainer = styled.div`
+position:relative;
   display: flex;
+ gap:20px;
   text-align: left;
-  gap: 20px;
-  background-color: var(--background-color);
-  box-shadow: 0px var(--card-box-shadow-1-y) var(--card-box-shadow-1-blur) var(--card-box-shadow-1),
-    0px var(--card-box-shadow-2-y) var(--card-box-shadow-2-blur) var(--card-box-shadow-2),
-    0 0 0 1px var(--card-border-color);
-  padding: 56px 16px 16px 16px;
-  border-radius: 15px;
-  cursor: pointer;
-  position: relative;
-  transition: box-shadow 0.25s;
+  background-color:white;
+  margin:15px;
+  border-radius:10px;
+  padding:10px;
+  transition:all 0.5s ease-in-out;
+  cursor: pointer;  
+  &:hover {
+    box-shadow: -5px 5px 0px rgba(255, 255, 255, 1), 
+            -10px 10px 0px rgba(255, 255, 255, 0.7), 
+            -15px 15px 0px rgba(255, 255, 255, 0.4), 
+            -20px 20px 0px rgba(255, 255, 255, 0.1);
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 15px;
-    background-color: var(--card-background-color);
-  }
+        &::after {
+            content: 'OPEN';
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 16px;
+            color: #000;
+            opacity: 1; /* Устанавливаем полную непрозрачность при наведении */
+            transition: opacity 0.5s ease-in-out; /* Плавный переход для появления */
+        }
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        opacity: 0; /* Начальная непрозрачность */
+        transition: opacity 0.5s ease-in-out; /* Плавный переход для появления */
+    }
+
 `;
 
 const InfoContainer = styled.div`
@@ -75,7 +92,7 @@ const Photo = styled.img`
   border-radius:10px
 `;
 
-const Checker = styled.div<{$alive?:boolean}>`
+const Checker = styled.div<{ $alive?: boolean }>`
   width:8px;
   height:8px;
   background-color: ${({ $alive }) => ($alive ? 'green' : 'red')};
