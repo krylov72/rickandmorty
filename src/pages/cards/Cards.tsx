@@ -5,14 +5,13 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../common/useAppDispatch';
 import { fetchCards } from './cards-reducer';
 import { useSelector } from 'react-redux';
-import { cardsSelector } from './cardsSelector';
+import { cardsSelector, isLoadingSelector } from './cardsSelector';
 import { Info } from '../../api/cardsApi';
 import { RootState } from '../../app/store';
 import { Loader } from '../../common/Loader';
 
 export const Cards = () => {
-  
-  const isLoading = useSelector((state:RootState) => state.loading)
+  const isLoading = useSelector(isLoadingSelector);
   const [currentApiUrl, setCurrentApiUrl] = useState<string>('https://rickandmortyapi.com/api/character/?page=1');
   const [info, setInfo] = useState<Info | null>(null);
 
@@ -37,9 +36,9 @@ export const Cards = () => {
       }
     });
   }, [currentApiUrl]);
-  
+
   if (isLoading) {
-    return <Loader />
+    return <Loader />;
   }
 
   return (
@@ -53,7 +52,7 @@ export const Cards = () => {
               location={c.location.name}
               name={c.name}
               species={c.species}
-              stateBorn={c.origin.name}
+              gender={c.gender}
               avatar={c.image}
             ></Card>
           );
@@ -71,6 +70,6 @@ export const Cards = () => {
 
 const CardsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, minmax(200px, 1fr));
   gap: 10px;
 `;

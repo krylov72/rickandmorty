@@ -1,19 +1,6 @@
-import React from "react";
-import { motion } from "framer-motion";
-
-const loadingContainer = {
-  width: "4rem",
-  height: "4rem",
-  display: "flex",
-  justifyContent: "space-around",
-};
-const loadingCircle = {
-  display: "block",
-  width: "1rem",
-  height: "1rem",
-  backgroundColor: "#3A36DB",
-  borderRadius: "0.5rem",
-};
+import React from 'react';
+import { motion } from 'framer-motion';
+import s from './Loader.module.css'; // Добавьте свой файл стилей для оформления
 
 const loadingContainerVariants = {
   start: {
@@ -30,46 +17,36 @@ const loadingContainerVariants = {
 
 const loadingCircleVariants = {
   start: {
-    y: "0%",
+    y: '0%',
   },
   end: {
-    y: "60%",
+    y: '100%',
+    transition: {
+      duration: 0.7,
+      ease: [0.42, 0, 0.58, 1],
+      yoyo: true,
+      repeat: Infinity,
+    },
   },
 };
-const loadingCircleTransition = {
-  duration : 0.4,
-  yoyo : Infinity,
-  ease: 'easeInOut'
-}
 
 export const Loader = () => {
   return (
-    <div>
-      <div className="fixed  w-full min-h-screen z-50 bg-black opacity-30" />
-      <div className="flex fixed w-full justify-center items-center h-screen">
-        <motion.div
-          style={loadingContainer}
-          variants={loadingContainerVariants}
-          initial="start"
-          animate="end"
-        >
-          <motion.span
-            style={loadingCircle}
-            variants={loadingCircleVariants}
-            transition={loadingCircleTransition}
-          ></motion.span>
-          <motion.span
-            style={loadingCircle}
-            variants={loadingCircleVariants}
-            transition={loadingCircleTransition}
-          ></motion.span>
-          <motion.span
-            style={loadingCircle}
-            variants={loadingCircleVariants}
-            transition={loadingCircleTransition}
-          ></motion.span>
-        </motion.div>
-      </div>
-    </div>
+    <motion.div
+      className={s.loadingContainer} // Стилизация контейнера
+      variants={loadingContainerVariants}
+      initial="start"
+      animate="end"
+    >
+      {[0, 1, 2].map((index) => (
+        <motion.span
+          key={index}
+          className={s.loadingCircle} // Стилизация кружков
+          variants={loadingCircleVariants}
+        />
+      ))}
+    </motion.div>
   );
 };
+
+export default Loader;
