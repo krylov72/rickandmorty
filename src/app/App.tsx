@@ -2,12 +2,13 @@ import './App.css';
 import { Header } from '../pages/header/Header';
 import { Cards } from '../pages/cards/Cards';
 import { useSelector } from 'react-redux';
-import { RootState } from './store';
 import { LoadingScreen } from '../pages/loading/LoadingScreen';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../common/useAppDispatch';
 import { cardsActions } from '../pages/cards/cards-reducer';
-import {  isInitializedSelector } from '../pages/cards/cardsSelector';
+import { isInitializedSelector } from '../pages/cards/cardsSelector';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { PATHS } from '../common/PATH';
 
 function App() {
   const isInitialized = useSelector(isInitializedSelector);
@@ -25,7 +26,10 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Cards />
+      <Routes>
+        <Route path="/character" element={<Cards />} />
+        <Route path="*" element={<Navigate to={PATHS.app} />} />
+      </Routes>
     </div>
   );
 }
