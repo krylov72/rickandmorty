@@ -1,5 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { filterSelect } from './filterSelect';
 
 type Props = {
   name: string;
@@ -8,6 +10,7 @@ type Props = {
 
 export const Filter = ({ name, onChangeFilter }: Props) => {
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const filter = useSelector(filterSelect);
 
   useEffect(() => {
     return () => {
@@ -26,6 +29,7 @@ export const Filter = ({ name, onChangeFilter }: Props) => {
   };
 
   const clearFilterHandler = () => {
+    if (!filter) return;
     onChangeFilter('');
   };
 
