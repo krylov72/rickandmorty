@@ -12,49 +12,16 @@ import { Filter } from '../filter/Filter';
 import { filterSelect } from '../filter/filterSelect';
 import { filterActions } from '../filter/filter-slice';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { PATHS } from '../../common/PATH';
+import { useCards } from './hooks/useCards';
 
 export const Cards = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
   const isLoading = useSelector(isLoadingSelector);
   const filter = useSelector(filterSelect);
   const cards = useSelector(cardsSelector);
 
-  const currentApiUrl = `https://rickandmortyapi.com/api/character${location.search}`;
-
-  const [info, setInfo] = useState<Info | null>(null);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchCards(currentApiUrl)).then((res) => {
-      console.log(res);
-
-      if (typeof res.payload !== 'string' && res.payload) {
-        setInfo(res.payload.info);
-      }
-    });
-  }, [currentApiUrl, dispatch]);
-
-  const changeFilterHandler = (name: string) => {
-    dispatch(filterActions.setFilterName({ name }));
-    const params = new URLSearchParams(location.search);
-    params.set('name', name); // Замените 'filter' на нужный вам параметр
-
-    navigate(`?${params.toString()}`);
-  };
-
-  const nextPageHandler = () => {
-    if (info?.next) {
-      navigate(`${info?.next.slice(32)}`);
-    }
-  };
-
-  const prevPageHandler = () => {
-    if (info?.prev) {
-      navigate(`${info?.prev.slice(32)}`);
-    }
-  };
-
+ const {changeFilterHandler,info,nextPageHandler,prevPageHandler} =  useCards()
+  
   if (isLoading) {
     return <Loader />;
   }
