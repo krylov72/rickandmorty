@@ -18,12 +18,9 @@ export const Filter = ({ name, onChangeFilter }: Props) => {
   }, [timeoutId]);
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-
+   
     const id = setTimeout(() => {
-      onChangeFilter(e.currentTarget.value);
+      onChangeFilter(e.target.value);
     }, 2000);
 
     setTimeoutId(id);
@@ -31,9 +28,9 @@ export const Filter = ({ name, onChangeFilter }: Props) => {
 
   return (
     <FilterContainer>
-      <Name htmlFor="">
+      <Name htmlFor="filter">
         Find by name
-        <ByName placeholder="Введите фильтр" onChange={onInputChange}></ByName>
+        <ByName id='filter' placeholder="Введите фильтр" onChange={onInputChange}></ByName>
       </Name>
     </FilterContainer>
   );
