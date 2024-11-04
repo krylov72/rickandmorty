@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { filterSelect } from './filterSelect';
+import { useLocation, useNavigate } from 'react-router';
 
 type Props = {
   name: string;
@@ -9,6 +10,8 @@ type Props = {
 };
 
 export const Filter = ({ name, onChangeFilter }: Props) => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const filter = useSelector(filterSelect);
 
@@ -21,6 +24,10 @@ export const Filter = ({ name, onChangeFilter }: Props) => {
   }, [timeoutId]);
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
     const id = setTimeout(() => {
       onChangeFilter(e.target.value);
     }, 1000);
@@ -29,8 +36,9 @@ export const Filter = ({ name, onChangeFilter }: Props) => {
   };
 
   const clearFilterHandler = () => {
-    if (!filter) return;
-    onChangeFilter('');
+    const params = new URLSearchParams(location.search);
+    params.delete('name');
+    navigate(`${params}`);
   };
 
   return (
@@ -73,7 +81,7 @@ const ByName = styled.input`
   }
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   align-items: center;
   appearance: none;
   background-color: #fcfcfd;
