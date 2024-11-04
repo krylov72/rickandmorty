@@ -8,13 +8,8 @@
 
 .loadingCircle {
     width: 50px;
-        /* Ширина круга */
         height: 50px;
-        /* Высота круга */
         background-color: #3A36DB;
-        /* Цвет фона */
         border-radius: 50%;
-        /* Радиус границ для создания круга */
         display: inline-block;
-        /* Позволяет использовать стиль в строке */
 }
