@@ -8,7 +8,7 @@ import { cardsSelector, isLoadingSelector } from './cardsSelector';
 import { Info } from '../../api/cardsApi';
 import { Loader } from '../../common/Loader';
 import { ParticlesSX } from '../../common/Particles';
-import { Filter } from '../filter/Filter';
+import { Button, Filter } from '../filter/Filter';
 import { filterSelect } from '../filter/filterSelect';
 import { filterActions } from '../filter/filter-slice';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -20,8 +20,8 @@ export const Cards = () => {
   const filter = useSelector(filterSelect);
   const cards = useSelector(cardsSelector);
 
- const {changeFilterHandler,info,nextPageHandler,prevPageHandler} =  useCards()
-  
+  const { changeFilterHandler, info, nextPageHandler, prevPageHandler } = useCards();
+
   if (isLoading) {
     return <Loader />;
   }
@@ -48,12 +48,12 @@ export const Cards = () => {
         <Filter name={filter} onChangeFilter={changeFilterHandler} />
       </CardsContainer>
 
-      <button onClick={prevPageHandler} disabled={!info?.prev}>
+      <Button onClick={prevPageHandler} disabled={!info?.prev}>
         PREV
-      </button>
-      <button onClick={nextPageHandler} disabled={!info?.next}>
+      </Button>
+      <Button onClick={nextPageHandler} disabled={!info?.next}>
         NEXT
-      </button>
+      </Button>
     </>
   );
 };
