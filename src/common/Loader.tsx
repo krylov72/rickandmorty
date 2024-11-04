@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import s from './Loader.module.css'; // Добавьте свой файл стилей для оформления
+import s from './Loader.module.css';
 
 const loadingContainerVariants = {
   start: {
